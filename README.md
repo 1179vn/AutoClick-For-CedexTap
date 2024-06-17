@@ -1,1 +1,1 @@
-Start game: https://t.me/cedex_tap_bot?start=1718119360901104
+Play game at link: https://t.me/cedex_tap_bot?start=1718119360901104
