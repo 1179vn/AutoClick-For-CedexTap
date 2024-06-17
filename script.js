@@ -93,12 +93,22 @@ document.body.appendChild(pauseButton);
 
 let totalPoints = 0;
 let tapOptionIndex = -1;
+let isCheckFarmClaim = 1;
 
 function autoClick() {
     if (!isGamePaused) {
         try {
-			
-			
+			if(isCheckFarmClaim === 0)
+			{
+				//Begin Click button TAP from Navigation
+				const navButtonTap = document.querySelector('.Navigation_nav__MsE7Z .Button_btn__XqmXE:nth-child(1)');
+				if(navButtonTap)
+				{
+					clickElement(navButtonTap);
+				}
+				//End Click button TAP from Navigation
+			}
+			//Begin Claim Result Tap
 			const claimContainerForClaim = document.querySelector('.Tap_claimContainerForClaim__wEVt3');
 			if(claimContainerForClaim)
 			{
@@ -112,18 +122,22 @@ function autoClick() {
 				setTimeout(autoClick, randomDelay(1000, 3000));
 				return;
 			}
-			
+			//End Claim Result Tap
+			//Begin Join Battle
 			const joinContainerSmall = document.querySelector('.Tap_joinContainerSmall__kktxM');
 			const joinTheBattle = document.querySelector('.Tap_claimButton__iCJVm');
 			if(joinContainerSmall && joinTheBattle)
 			{
 				console.log(`${logPrefix}JoinBattle`, styles.info);
 				tapOptionIndex = -1;
+				isCheckFarmClaim = 1;
+				
 				clickElement(joinTheBattle);
 				setTimeout(autoClick, randomDelay(100, 250));
 				return;
 			}
-				
+			//End Join Battle
+			//Begin Tap Tap Tap
 			const tapBtns = document.querySelectorAll('.Tap_tapBtn__3IPK2');
 			const claimContainer = document.querySelector('.Tap_claimContainer__mbHyw');
 			if(tapBtns.length && !claimContainer)
@@ -134,13 +148,32 @@ function autoClick() {
 				setTimeout(autoClick, randomDelay(100, 250));
 				return;
 			}
-			
+			//End Tap Tap Tap
+			//Begin Check Farm
+			const btnFarmClaim = document.querySelector('.Farm_startFarmingBtnWrapper__iEYr7 > .Button_btn__XqmXE'); 
+			console.log(`${logPrefix}${btnFarmClaim}`, styles.info);
+			if(btnFarmClaim)
+			{
+				clickElement(btnFarmClaim);
+				isCheckFarmClaim = 0;
+				setTimeout(autoClick, randomDelay(50, 150));
+				return;
+			}
+			if(isCheckFarmClaim === 1)
+			{
+				const navButtonFarm = document.querySelector('.Navigation_nav__MsE7Z .Button_btn__XqmXE:nth-child(3)');
+				console.log(`${logPrefix}${navButtonFarm}`, styles.info);
+				clickElement(navButtonFarm);
+				setTimeout(autoClick, randomDelay(50, 150));
+				return;
+			}
+			//End Check Farm
 			setTimeout(autoClick, randomDelay(50, 150));
 			return;
 			
         } catch (error) {
-            // Do not log the error to avoid cluttering the console
-			console.log(`${logPrefix}${error.message}`, styles.error);
+    		// Do not log the error to avoid cluttering the console
+		console.log(`${logPrefix}${error.message}`, styles.error);
         }
     }
 	else
